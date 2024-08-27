@@ -1,0 +1,11 @@
+.\objects\thread.o: ..\Source\RT-Thread\src\thread.c
+.\objects\thread.o: ..\Source\RT-Thread\include\rtthread.h
+.\objects\thread.o: ..\Source\Main\rtconfig.h
+.\objects\thread.o: ..\Source\RT-Thread\include\rtdebug.h
+.\objects\thread.o: ..\Source\RT-Thread\include\rtdef.h
+.\objects\thread.o: A:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\thread.o: ..\Source\RT-Thread\include\rtservice.h
+.\objects\thread.o: ..\Source\RT-Thread\include\rtm.h
+.\objects\thread.o: ..\Source\RT-Thread\include\rtthread.h
+.\objects\thread.o: ..\Source\RT-Thread\components\finsh\finsh_api.h
+.\objects\thread.o: ..\Source\RT-Thread\include\rthw.h

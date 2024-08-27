@@ -1,0 +1,17 @@
+.\objects\cmd.o: ..\Source\RT-Thread\components\finsh\cmd.c
+.\objects\cmd.o: ..\Source\RT-Thread\include\rthw.h
+.\objects\cmd.o: ..\Source\RT-Thread\include\rtthread.h
+.\objects\cmd.o: ..\Source\Main\rtconfig.h
+.\objects\cmd.o: ..\Source\RT-Thread\include\rtdebug.h
+.\objects\cmd.o: ..\Source\RT-Thread\include\rtdef.h
+.\objects\cmd.o: A:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\cmd.o: ..\Source\RT-Thread\include\rtservice.h
+.\objects\cmd.o: ..\Source\RT-Thread\include\rtm.h
+.\objects\cmd.o: ..\Source\RT-Thread\include\rtthread.h
+.\objects\cmd.o: ..\Source\RT-Thread\components\finsh\finsh_api.h
+.\objects\cmd.o: ..\Source\RT-Thread\components\finsh\finsh.h
+.\objects\cmd.o: A:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\cmd.o: A:\Keil_v5\ARM\ARMCC\Bin\..\include\ctype.h
+.\objects\cmd.o: A:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\cmd.o: A:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\cmd.o: A:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
