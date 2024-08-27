@@ -59,7 +59,8 @@ typedef enum{
 #include "USart.h"
 #include "ChipInfo.h"
 #include "Exti.h"
-
+//#include "BspTimer.h"
+//#include "Button.h"
 		
 //----------------------------------------
 //全局变量定义,请使用EXT修饰

@@ -1,9 +1,7 @@
 #include "config.h"
 #include "Task.h"
 
-//static rt_thread_t led_thread;
-//static rt_thread_t usart2_recv_thread = RT_NULL;
-//static rt_thread_t msg_process_thread = RT_NULL;
+
 static rt_thread_t dynamic_thread_t = RT_NULL;
 
 
@@ -54,27 +52,6 @@ void TaskInit(void)
 		++TaskIndex;
 	}
 
-//	led_thread = rt_thread_create("led", 
-//									led_thread_entry, 
-//									RT_NULL, 
-//									256, 5, 10);		//动态创建线程
-//	if(led_thread != RT_NULL){
-//		rt_thread_startup(led_thread);					//将线程加入就绪队列
-//	}
-//	
-//	usart2_recv_thread = rt_thread_create("usart2_recv_thread",
-//											usart2_recv_thread_entry, RT_NULL,
-//											512, 2, 10);//动态创建线程
-//	if(usart2_recv_thread != RT_NULL){
-//		rt_thread_startup(usart2_recv_thread);			//将线程加入就绪队列
-//	}
-//		
-//	msg_process_thread = rt_thread_create("msg_process_thread",
-//									msg_process_thread_entry, RT_NULL,
-//									512, 2, 10);		//动态创建线程
-//	if(msg_process_thread != RT_NULL){
-//		rt_thread_startup(msg_process_thread);			//将线程加入就绪队列
-//	}
 }
 
 void led_thread_entry(void *parameter)
@@ -83,7 +60,6 @@ void led_thread_entry(void *parameter)
 		LedToggle(GPIOA, GPIO_Pin_1);
 		rt_thread_mdelay(2000);		//GPIOA0每隔两秒反转一次
 		//↑线程必须有让出cpu的条件（|rt_thread_yield），否则如果当前线程是大优先级，其他低优先级无法执行
-		//? 加入高优先级执行两秒才翻转并让出执行权，那有个低优先级但1秒翻转一次的线程的时候，被迫只能3秒翻转一次吗====高优先级的线程在没有让出cpu使用权时，其他线程没有机会执行，就绪状态的线程不能翻转电平，所以要等3秒才反转电平吗？
 //		rt_kprintf("System Running Time:%d s\n ", rt_tick_get() / RT_TICK_PER_SECOND);
 	}
 }

@@ -2438,10 +2438,10 @@ Image component sizes
         18          0          0          0          0       2567   stm32f10x_it.o
        276         32          0         20          0       4350   stm32f10x_rcc.o
        376          6          0          0          0       5839   stm32f10x_usart.o
-        32          0          0          0          0       1871   system.o
+        32          0          0          0          0       1875   system.o
        328         28          0         20          0     230909   system_stm32f10x.o
         96         12          0          0          0      15729   systick.o
-       544        222         48        100          0       2752   task.o
+       544        222         48        100          0       2748   task.o
        788         38          0          0          0      11568   thread.o
        732         20          0         12          0      10864   timer.o
        688         52          0          4        512       4115   usart.o
