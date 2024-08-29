@@ -24,6 +24,9 @@ typedef enum{
 	MSG_KEY1_PRESS,
 	MSG_KEY11_PRESS,
 	
+	MSG_SECCESSED,
+	MSG_FAILED,
+	
 	MSG_LEN
 }MSG_TYPE;
 
@@ -58,15 +61,19 @@ typedef enum{
 #include "Gpio.h"
 #include "USart.h"
 #include "ChipInfo.h"
-#include "Exti.h"
-//#include "BspTimer.h"
+//#include "Exti.h"
+#include "ADCTimer.h"
 //#include "Button.h"
+#include "Sensor.h"
+#include "Lock.h"
+#include "ADC.h"
+#include "SensorMQ.h"
 		
 //----------------------------------------
 //全局变量定义,请使用EXT修饰
 EXT unsigned char 	g_Var;	
 EXT rt_sem_t 		usart2_recv_sem;		//串口2控制信号量控制块指针
-EXT rt_mq_t			msg_mq;					//按键消息队列控制块指针
+//EXT rt_mq_t			msg_mq;					//按键消息队列控制块指针
 
 //----------------------------------------
 #endif

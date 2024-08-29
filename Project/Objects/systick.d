@@ -48,4 +48,8 @@
 .\objects\systick.o: ..\Source\Dev\Gpio.h
 .\objects\systick.o: ..\Source\Dev\USart.h
 .\objects\systick.o: ..\Source\Dev\ChipInfo.h
-.\objects\systick.o: ..\Source\Dev\Exti.h
+.\objects\systick.o: ..\Source\Dev\ADCTimer.h
+.\objects\systick.o: ..\Source\Dev\Sensor.h
+.\objects\systick.o: ..\Source\Main\Lock.h
+.\objects\systick.o: ..\Source\Dev\ADC.h
+.\objects\systick.o: ..\Source\Main\SensorMQ.h

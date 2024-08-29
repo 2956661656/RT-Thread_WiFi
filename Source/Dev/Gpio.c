@@ -8,21 +8,21 @@ void LedGpioInit(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_0|GPIO_Pin_1 ;
+	GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_0|GPIO_Pin_1 ;
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
 	//GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct);
 	
 }
-void LedControl(void)
-{
-	GPIO_SetBits(GPIOA,GPIO_Pin_0|GPIO_Pin_1);
-	//SysTickDelayMs(1000);
-	rt_thread_mdelay(1000);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_0|GPIO_Pin_1);
-	//SysTickDelayMs(1000);
-	rt_thread_mdelay(1000);
-}
+//void LedControl(void)
+//{
+//	GPIO_SetBits(GPIOA,GPIO_Pin_0|GPIO_Pin_1);
+//	//SysTickDelayMs(1000);
+//	rt_thread_mdelay(1000);
+//	GPIO_ResetBits(GPIOA, GPIO_Pin_0|GPIO_Pin_1);
+//	//SysTickDelayMs(1000);
+//	rt_thread_mdelay(1000);
+//}
 
 void LedToggle(GPIO_TypeDef *GPIOx, uint16 GPIO_Pin)
 {
@@ -55,3 +55,30 @@ void BeepOff(void)
 	GPIO_SetBits(GPIOB,GPIO_Pin_8);
 }
 MSH_CMD_EXPORT(BeepOff, Turn off Beep);
+
+
+//=====================================================================================================
+
+//void BrightSensorGPIOInit(void)
+//{
+//	GPIO_InitTypeDef  GPIO_InitStruct;
+//	
+//	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+
+//	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;
+//	GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_5;
+//	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+//	GPIO_Init(GPIOA, &GPIO_InitStruct);
+//}
+
+//void TemperSensorGPIOInit()
+//{
+//	GPIO_InitTypeDef  GPIO_InitStruct;
+//	
+//	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+
+//	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;
+//	GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_6;
+//	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+//	GPIO_Init(GPIOA, &GPIO_InitStruct);
+//}

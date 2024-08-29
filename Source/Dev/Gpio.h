@@ -9,6 +9,8 @@ void BeepGpioInit(void);
 void BeepOn(void);
 void BeepOff(void);
 void LedToggle(GPIO_TypeDef *GPIOx, uint16 GPIO_Pin);//·­×ªGPIO
+//void BrightSensorGPIOInit();
+//void TemperSensorGPIOInit();
 
 #endif
 

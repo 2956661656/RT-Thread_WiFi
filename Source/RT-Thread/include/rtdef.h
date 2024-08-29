@@ -38,7 +38,7 @@
 extern "C" {
 #endif
 
-/**
+/**========================================================================================================
  * @addtogroup BasicDef
  */
 
@@ -250,7 +250,7 @@ typedef int (*init_fn_t)(void);
 #define RT_KERNEL_REALLOC(ptr, size)    rt_realloc(ptr, size)
 #endif
 
-/**
+/**========================================================================================================
  * @addtogroup Error
  */
 
@@ -316,7 +316,7 @@ struct rt_slist_node
 };
 typedef struct rt_slist_node rt_slist_t;                /**< Type for single list. */
 
-/**
+/**========================================================================================================
  * @addtogroup KernelObject
  */
 
@@ -343,7 +343,7 @@ struct rt_object
 };
 typedef struct rt_object *rt_object_t;                  /**< Type for kernel objects. */
 
-/**
+/**========================================================================================================
  *  The object type can be one of the follows with specific
  *  macros enabled:
  *  - Thread
@@ -400,7 +400,7 @@ struct rt_object_information
 
 /**@}*/
 
-/**
+/**========================================================================================================
  * @addtogroup Clock
  */
 
@@ -463,7 +463,7 @@ typedef siginfo_t rt_siginfo_t;
 #endif
 /**@}*/
 
-/**
+/**========================================================================================================
  * @addtogroup Thread
  */
 
@@ -569,7 +569,7 @@ typedef struct rt_thread *rt_thread_t;
 
 /**@}*/
 
-/**
+/**========================================================================================================
  * @addtogroup IPC
  */
 
@@ -694,7 +694,7 @@ typedef struct rt_messagequeue *rt_mq_t;
 
 /**@}*/
 
-/**
+/**========================================================================================================
  * @addtogroup MM
  */
 
@@ -769,7 +769,7 @@ typedef struct rt_mempool *rt_mp_t;
 /**@}*/
 
 #ifdef RT_USING_DEVICE
-/**
+/**========================================================================================================
  * @addtogroup Device
  */
 

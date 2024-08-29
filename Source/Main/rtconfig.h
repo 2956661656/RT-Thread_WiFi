@@ -15,7 +15,7 @@
 #endif //(__CC_ARM) || (__CLANG_ARM)
 
 // <<< Use Configuration Wizard in Context Menu >>>
-// <h>Basic Configuration
+// <h>Basic Configuration¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶
 // <o>Maximal level of thread priority <8-256>
 //  <i>Default: 32
 #define RT_THREAD_PRIORITY_MAX  32
@@ -37,11 +37,11 @@
 
 // <o>the stack size of main thread<1-4086>
 //  <i>Default: 512
-#define RT_MAIN_THREAD_STACK_SIZE     512
+#define RT_MAIN_THREAD_STACK_SIZE     1024
 
 // </h>
 
-// <h>Debug Configuration
+// <h>Debug Configuration¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶
 // <c1>enable kernel debug configuration
 //  <i>Default: enable kernel debug configuration
 //#define RT_DEBUG
@@ -55,7 +55,7 @@
 // </c>
 // </h>
 
-// <h>Hook Configuration
+// <h>Hook Configuration¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶
 // <c1>using hook
 //  <i>using hook
 //#define RT_USING_HOOK
@@ -66,7 +66,7 @@
 // </c>
 // </h>
 
-// <e>Software timers Configuration
+// <e>Software timers Configuration¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶
 // <i> Enables user timers
 #define RT_USING_TIMER_SOFT         0
 #if RT_USING_TIMER_SOFT == 0
@@ -74,13 +74,13 @@
 #endif
 // <o>The priority level of timer thread <0-31>
 //  <i>Default: 4
-#define RT_TIMER_THREAD_PRIO        4
+#define RT_TIMER_THREAD_PRIO        1
 // <o>The stack size of timer thread <0-8192>
 //  <i>Default: 512
 #define RT_TIMER_THREAD_STACK_SIZE  512
 // </e>
 
-// <h>IPC(Inter-process communication) Configuration
+// <h>IPC(Inter-process communication) Configuration¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶
 // <c1>Using Semaphore
 //  <i>Using Semaphore
 #define RT_USING_SEMAPHORE
@@ -103,7 +103,7 @@
 // </c>
 // </h>
 
-// <h>Memory Management Configuration
+// <h>Memory Management Configuration¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶
 // <c1>Dynamic Heap Management
 //  <i>Dynamic Heap Management
 #define RT_USING_HEAP
@@ -118,7 +118,7 @@
 // </c>
 // </h>
 
-// <h>Console Configuration
+// <h>Console Configuration¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶
 // <c1>Using console
 //  <i>Using console
 #define RT_USING_CONSOLE
@@ -129,6 +129,7 @@
 #define RT_CONSOLEBUF_SIZE          128
 // </h>
 
+//¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶¡¶
 #if defined(RT_USING_FINSH)
     #define FINSH_USING_MSH
     #define FINSH_USING_MSH_ONLY
@@ -136,7 +137,7 @@
     // <o>the priority of finsh thread <1-7>
     //  <i>the priority of finsh thread
     //  <i>Default: 6
-    #define __FINSH_THREAD_PRIORITY     5
+    #define __FINSH_THREAD_PRIORITY     1
     #define FINSH_THREAD_PRIORITY       (RT_THREAD_PRIORITY_MAX / 8 * __FINSH_THREAD_PRIORITY + 1)
     // <o>the stack of finsh thread <1-4096>
     //  <i>the stack of finsh thread

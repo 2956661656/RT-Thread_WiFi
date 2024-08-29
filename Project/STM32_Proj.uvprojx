@@ -585,6 +585,26 @@
               <FileType>5</FileType>
               <FilePath>..\Source\Main\Task.h</FilePath>
             </File>
+            <File>
+              <FileName>Lock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Source\Main\Lock.c</FilePath>
+            </File>
+            <File>
+              <FileName>Lock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Source\Main\Lock.h</FilePath>
+            </File>
+            <File>
+              <FileName>SensorMQ.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Source\Main\SensorMQ.c</FilePath>
+            </File>
+            <File>
+              <FileName>SensorMQ.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Source\Main\SensorMQ.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -616,9 +636,24 @@
               <FilePath>..\Source\Dev\ChipInfo.h</FilePath>
             </File>
             <File>
-              <FileName>Exti.c</FileName>
+              <FileName>Adc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Source\Dev\Exti.c</FilePath>
+              <FilePath>..\Source\Dev\Adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADCTimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Source\Dev\ADCTimer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADCTimer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Source\Dev\ADCTimer.h</FilePath>
+            </File>
+            <File>
+              <FileName>FinSHcmd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Source\Dev\FinSHcmd.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -48,4 +48,8 @@
 .\objects\usart.o: ..\Source\Dev\Gpio.h
 .\objects\usart.o: ..\Source\Dev\USart.h
 .\objects\usart.o: ..\Source\Dev\ChipInfo.h
-.\objects\usart.o: ..\Source\Dev\Exti.h
+.\objects\usart.o: ..\Source\Dev\ADCTimer.h
+.\objects\usart.o: ..\Source\Dev\Sensor.h
+.\objects\usart.o: ..\Source\Main\Lock.h
+.\objects\usart.o: ..\Source\Dev\ADC.h
+.\objects\usart.o: ..\Source\Main\SensorMQ.h

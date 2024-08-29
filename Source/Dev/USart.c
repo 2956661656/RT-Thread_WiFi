@@ -220,7 +220,7 @@ void USART2_IRQHandler(void)
 	{
 			USART_ClearFlag(USART2, USART_FLAG_ORE);
 	}
-	if( USART_GetFlagStatus(USART2,USART_FLAG_IDLE)==SET ) 				// ´®¿ÚÒç³ö´íÎó
+	if( USART_GetFlagStatus(USART2,USART_FLAG_IDLE)==SET ) 				// 
 	{
 		#if USART2_EN == 1 
 		 

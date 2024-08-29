@@ -48,4 +48,8 @@
 .\objects\board.o: ..\Source\Dev\Gpio.h
 .\objects\board.o: ..\Source\Dev\USart.h
 .\objects\board.o: ..\Source\Dev\ChipInfo.h
-.\objects\board.o: ..\Source\Dev\Exti.h
+.\objects\board.o: ..\Source\Dev\ADCTimer.h
+.\objects\board.o: ..\Source\Dev\Sensor.h
+.\objects\board.o: ..\Source\Main\Lock.h
+.\objects\board.o: ..\Source\Dev\ADC.h
+.\objects\board.o: ..\Source\Main\SensorMQ.h

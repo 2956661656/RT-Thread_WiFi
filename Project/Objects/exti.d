@@ -49,3 +49,8 @@
 .\objects\exti.o: ..\Source\Dev\USart.h
 .\objects\exti.o: ..\Source\Dev\ChipInfo.h
 .\objects\exti.o: ..\Source\Dev\Exti.h
+.\objects\exti.o: ..\Source\Dev\ADCTimer.h
+.\objects\exti.o: ..\Source\Dev\Sensor.h
+.\objects\exti.o: ..\Source\Main\Lock.h
+.\objects\exti.o: ..\Source\Dev\ADC.h
+.\objects\exti.o: ..\Source\Main\SensorMQ.h

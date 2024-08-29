@@ -2,19 +2,27 @@
 #include "Task.h"
 
 
+rt_thread_t bright_thread;
+rt_thread_t temper_thread;
+
+
 static rt_thread_t dynamic_thread_t = RT_NULL;
 
 
 void led_thread_entry(void *parameter);
 void usart2_recv_thread_entry(void *parameter);
-void msg_process_thread_entry(void *parameter);
+//void msg_process_thread_entry(void *parameter);
+void temper_checkout_thread_entry(void *params);
+void bright_checkout_thread_entry(void *params);
 
 //线程集中管理
 TaskStruct Tasks[] = {
-	/*******线程名**************入口函数******************参数*******空间**优先**时间*/
-	{"led", 				led_thread_entry, 			RT_NULL,	256, 	5, 	10},
-	{"usart2_recv_thread", 	usart2_recv_thread_entry, 	RT_NULL, 	512, 	2, 	10},
-	{"msg_process_thread", 	msg_process_thread_entry, 	RT_NULL, 	512, 	2, 	10},
+	/*******线程名**************入口函数**********************参数*******空间**优先**时间*/
+	{"led", 				led_thread_entry, 				RT_NULL,	256,   11, 	10},
+	{"usart2_recv_thread", 	usart2_recv_thread_entry, 		RT_NULL, 	512, 	1, 	10},
+/*	{"msg_process_thread", 	msg_process_thread_entry, 		RT_NULL, 	512, 	5, 	10},*/
+	{"bright_checkout", 	bright_checkout_thread_entry, 	RT_NULL, 	512, 	2, 	10},
+	{"temper_checkout", 	temper_checkout_thread_entry, 	RT_NULL, 	512, 	3, 	10},
 	
 	
 	{" ", RT_NULL, RT_NULL, RT_NULL, RT_NULL, RT_NULL}		//dummy线程结构体作作标志位
@@ -23,10 +31,10 @@ TaskStruct Tasks[] = {
 void TaskInit(void)
 {
 	usart2_recv_sem = rt_sem_create("usart2_recv_sem", 0, RT_IPC_FLAG_FIFO);
-	if(usart2_recv_sem != RT_NULL)	rt_kprintf("\n信号量usart2_recv_sem创建成功\n");
+	if(usart2_recv_sem != RT_NULL)	rt_kprintf("\nusart2_recv_sem init successed\n");
 	
-	msg_mq = rt_mq_create("msg_mq", 32, 10, RT_IPC_FLAG_FIFO);
-	if(usart2_recv_sem != RT_NULL)	rt_kprintf("\n消息队列key_mq创建成功\n");
+//	msg_mq = rt_mq_create("msg_mq", 32, 10, RT_IPC_FLAG_FIFO);
+//	if(usart2_recv_sem != RT_NULL)	rt_kprintf("\n消息队列key_mq创建成功\n");
 	
 //========================================================================================================
 //	rt_thread_t rt_thread_create(const char *name,
@@ -51,8 +59,22 @@ void TaskInit(void)
 		
 		++TaskIndex;
 	}
-
+	
+//	bright_thread = rt_thread_create("bright_thread", 
+//										bright_checkout_thread_entry, 
+//										RT_NULL, 512, 2, 10);
+//	if(bright_thread != RT_NULL){
+//		rt_thread_startup(bright_thread);					//将线程加入就绪队列
+//	}
+//	temper_thread = rt_thread_create("temper_checkout", 
+//										temper_checkout_thread_entry, 
+//										RT_NULL, 512, 3, 10);
+//	if(temper_thread != RT_NULL){
+//		rt_thread_startup(temper_thread);					//将线程加入就绪队列
+//	}
 }
+INIT_APP_EXPORT(TaskInit);
+
 
 void led_thread_entry(void *parameter)
 {
@@ -83,22 +105,11 @@ void usart2_recv_thread_entry(void *parameter)
 	}
 }
 
-void msg_process_thread_entry(void *parameter)
-{
-	MSG_TYPE msgBuf = MSG_NULL;		//固定消息
-	while(1){
-		rt_err_t result = rt_mq_recv(msg_mq, &msgBuf, sizeof(msgBuf), RT_WAITING_FOREVER);
-		
-		if(result == RT_EOK){
-			rt_kprintf("\n接收到消息：%s\n", msgBuf);
-		}else{
-			rt_kprintf("\n接收消息错误，错误代码：0x%lx\n", result);
-		}
-	}
-	
-//	static uint8 msgBuf[32] = {0};
+//void msg_process_thread_entry(void *parameter)
+//{
+//	MSG_TYPE msgBuf = MSG_NULL;		//固定消息
 //	while(1){
-//		rt_err_t result = rt_mq_recv(msg_mq, msgBuf, sizeof(msgBuf), RT_WAITING_FOREVER);
+//		rt_err_t result = rt_mq_recv(msg_mq, &msgBuf, sizeof(msgBuf), RT_WAITING_FOREVER);
 //		
 //		if(result == RT_EOK){
 //			rt_kprintf("\n接收到消息：%s\n", msgBuf);
@@ -106,5 +117,50 @@ void msg_process_thread_entry(void *parameter)
 //			rt_kprintf("\n接收消息错误，错误代码：0x%lx\n", result);
 //		}
 //	}
+//}
+
+void bright_checkout_thread_entry(void *params)		//优先级高
+{
+	uint16_t temper = 0;
+	uint16_t brightness = 0;
+
+	while(1){
+		//互斥 读取buffer[0]
+		rt_mutex_take(buffer_lock, RT_WAITING_FOREVER);
+		brightness = ADCBuffer[0];
+		rt_mutex_release(buffer_lock);
+		//等待另一个函数的消息
+		rt_mq_recv(sensor_mq, &temper, sizeof(temper), RT_WAITING_FOREVER);
+		if(temper == 0){		//失败
+			rt_kprintf("获取temperature失败\n");
+		}else{
+			//成功，连接结果
+			rt_kprintf("\nbrightness: %d, temperature: %d\n", brightness, temper);
+		}
+		
+		
+		rt_thread_mdelay(0xFFFF);
+//		rt_thread_suspend(bright_thread);
+//		rt_schedule();
+	}
+}
+
+void temper_checkout_thread_entry(void *params)		//优先级低
+{
+	uint16_t temper = 0;
+	while(1){
+		//互斥 读取buffer[1]
+		rt_mutex_take(buffer_lock, RT_WAITING_FOREVER);
+		temper = ADCBuffer[1];
+		rt_mutex_release(buffer_lock);
+		//发送消息
+		rt_mq_send(sensor_mq, &temper, sizeof(temper));
+		
+		
+		
+		//rt_thread_mdelay(1000);		//todo BUG 不允许该线程睡眠
+//		rt_thread_suspend(temper_thread);
+//		rt_schedule();		
+	}//todo 应使两个线程睡眠
 }
 

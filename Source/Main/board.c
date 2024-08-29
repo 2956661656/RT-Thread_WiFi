@@ -30,7 +30,7 @@ extern void SystemCoreClockUpdate(void);
 // frequency supplied to the SysTick timer and the processor 
 // core clock.
 extern uint32_t SystemCoreClock;
-
+//---------------------------------------------------------------------------------------------------------
 static uint32_t _SysTick_Config(rt_uint32_t ticks)
 {
     if ((ticks - 1) > 0xFFFFFF)
@@ -46,7 +46,7 @@ static uint32_t _SysTick_Config(rt_uint32_t ticks)
     return 0;
 }
 #endif
-
+//---------------------------------------------------------------------------------------------------------
 #if defined(RT_USING_USER_MAIN) && defined(RT_USING_HEAP)
 #define RT_HEAP_SIZE 2048					//8K∂—¥Û–°
 static uint32_t rt_heap[RT_HEAP_SIZE];     // heap default size: 4K(1024 * 4)
@@ -60,7 +60,7 @@ RT_WEAK void *rt_heap_end_get(void)
     return rt_heap + RT_HEAP_SIZE;
 }
 #endif
-
+//---------------------------------------------------------------------------------------------------------
 /**
  * This function will initial your board.
  */
@@ -85,7 +85,7 @@ void rt_hw_board_init()
     rt_system_heap_init(rt_heap_begin_get(), rt_heap_end_get());
 #endif
 }
-
+//---------------------------------------------------------------------------------------------------------
 void SysTick_Handler(void)
 {
     /* enter interrupt */

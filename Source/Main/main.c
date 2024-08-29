@@ -7,7 +7,6 @@
 
 int main(void)
 {
-	TaskInit();
 	
 	while(1)
 	{

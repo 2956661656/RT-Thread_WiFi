@@ -19,10 +19,12 @@ void SysInit(void)
 	//外设驱动初始化
 	SysTickInit();//系统滴答定时器初始化
 	LedGpioInit();//LED初始化
-	//BeepGpioInit();//Beep蜂鸣器初始化
+	BeepGpioInit();//Beep蜂鸣器初始化
 	UsartInit();//串口初始化
 	
 	//Tim2Init(72, 1000);		//1MHz -- 1S //中断周期为1ms，用于按键扫描
+	//BrightSensorInit();
+	
 	
 
 	
