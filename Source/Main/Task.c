@@ -18,14 +18,14 @@ void bright_checkout_thread_entry(void *params);
 //线程集中管理
 TaskStruct Tasks[] = {
 	/*******线程名**************入口函数**********************参数*******空间**优先**时间*/
-	{"led", 				led_thread_entry, 				RT_NULL,	256,   11, 	10},
-	{"usart2_recv_thread", 	usart2_recv_thread_entry, 		RT_NULL, 	512, 	1, 	10},
+	{"led", 				led_thread_entry, 				RT_NULL,	512,   10, 	10},
 /*	{"msg_process_thread", 	msg_process_thread_entry, 		RT_NULL, 	512, 	5, 	10},*/
 	{"bright_checkout", 	bright_checkout_thread_entry, 	RT_NULL, 	512, 	2, 	10},
 	{"temper_checkout", 	temper_checkout_thread_entry, 	RT_NULL, 	512, 	3, 	10},
+	{"usart2_recv_thread", 	usart2_recv_thread_entry, 		RT_NULL, 	512, 	1, 	10},
 	
 	
-	{" ", RT_NULL, RT_NULL, RT_NULL, RT_NULL, RT_NULL}		//dummy线程结构体作作标志位
+	{"", RT_NULL, RT_NULL, RT_NULL, RT_NULL, RT_NULL}		//dummy线程结构体作作标志位
 };
 
 void TaskInit(void)
@@ -60,18 +60,6 @@ void TaskInit(void)
 		++TaskIndex;
 	}
 	
-//	bright_thread = rt_thread_create("bright_thread", 
-//										bright_checkout_thread_entry, 
-//										RT_NULL, 512, 2, 10);
-//	if(bright_thread != RT_NULL){
-//		rt_thread_startup(bright_thread);					//将线程加入就绪队列
-//	}
-//	temper_thread = rt_thread_create("temper_checkout", 
-//										temper_checkout_thread_entry, 
-//										RT_NULL, 512, 3, 10);
-//	if(temper_thread != RT_NULL){
-//		rt_thread_startup(temper_thread);					//将线程加入就绪队列
-//	}
 }
 INIT_APP_EXPORT(TaskInit);
 
@@ -139,7 +127,9 @@ void bright_checkout_thread_entry(void *params)		//优先级高
 		}
 		
 		
-		rt_thread_mdelay(0xFFFF);
+//		rt_kprintf("bright test\n");
+		bright_thread = rt_thread_self();
+		rt_thread_mdelay(0xFFFFFF);
 //		rt_thread_suspend(bright_thread);
 //		rt_schedule();
 	}
@@ -156,9 +146,10 @@ void temper_checkout_thread_entry(void *params)		//优先级低
 		//发送消息
 		rt_mq_send(sensor_mq, &temper, sizeof(temper));
 		
+//		rt_kprintf("temper test\n");
 		
-		
-		//rt_thread_mdelay(1000);		//todo BUG 不允许该线程睡眠
+		temper_thread = rt_thread_self();
+		rt_thread_mdelay(0xFFFFFF);
 //		rt_thread_suspend(temper_thread);
 //		rt_schedule();		
 	}//todo 应使两个线程睡眠
