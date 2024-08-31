@@ -48,6 +48,7 @@
 .\objects\finshcmd.o: ..\Source\Dev\Gpio.h
 .\objects\finshcmd.o: ..\Source\Dev\USart.h
 .\objects\finshcmd.o: ..\Source\Dev\ChipInfo.h
+.\objects\finshcmd.o: ..\Source\Dev\Exti.h
 .\objects\finshcmd.o: ..\Source\Dev\ADCTimer.h
 .\objects\finshcmd.o: ..\Source\Dev\Sensor.h
 .\objects\finshcmd.o: ..\Source\Main\Lock.h

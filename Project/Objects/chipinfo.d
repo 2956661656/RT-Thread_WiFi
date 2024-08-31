@@ -48,6 +48,7 @@
 .\objects\chipinfo.o: ..\Source\Dev\SysTick.h
 .\objects\chipinfo.o: ..\Source\Dev\Gpio.h
 .\objects\chipinfo.o: ..\Source\Dev\USart.h
+.\objects\chipinfo.o: ..\Source\Dev\Exti.h
 .\objects\chipinfo.o: ..\Source\Dev\ADCTimer.h
 .\objects\chipinfo.o: ..\Source\Dev\Sensor.h
 .\objects\chipinfo.o: ..\Source\Main\Lock.h

@@ -39,6 +39,7 @@
 ".\objects\adc.o"
 ".\objects\adctimer.o"
 ".\objects\finshcmd.o"
+".\objects\exti.o"
 ".\objects\clock.o"
 ".\objects\components.o"
 ".\objects\cpu.o"

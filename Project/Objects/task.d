@@ -48,6 +48,7 @@
 .\objects\task.o: ..\Source\Dev\Gpio.h
 .\objects\task.o: ..\Source\Dev\USart.h
 .\objects\task.o: ..\Source\Dev\ChipInfo.h
+.\objects\task.o: ..\Source\Dev\Exti.h
 .\objects\task.o: ..\Source\Dev\ADCTimer.h
 .\objects\task.o: ..\Source\Dev\Sensor.h
 .\objects\task.o: ..\Source\Main\Lock.h

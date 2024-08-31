@@ -1,5 +1,4 @@
 #include "config.h"
-#include "Exti.h"
 
 
 void ExtiGpioInit(void);
@@ -49,15 +48,16 @@ rt_inline void ExtiModeInit(void)
 {
 	EXTI_InitTypeDef  EXTI_InitStructure;
 	
-	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource11);
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource11);		//AFIO选择引脚
+	
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;					//配置EXTI
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
 	EXTI_InitStructure.EXTI_Line = EXTI_Line11;
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
 	
-	
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource1);
+	
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
 	EXTI_InitStructure.EXTI_Line = EXTI_Line1;
@@ -68,16 +68,28 @@ rt_inline void ExtiModeInit(void)
 
 void EXTI15_10_IRQHandler(void)
 {
+	//todo 按键消抖
+	
 	if(EXTI_GetFlagStatus(EXTI_Line11) == SET)
 	{
-	
-		char * msg = "Key11 has been pushed. external interupt triggered.";
-		rt_mq_send(msg_mq, msg, sizeof(msg));
+		if(sensor_timer->parent.flag & RT_TIMER_FLAG_ACTIVATED)
+		{
+			rt_timer_stop(sensor_timer);		//停止检测传感器
+			bright_thread->user_data = 1;		//1表示 停止
+		}else{
+			rt_timer_start(sensor_timer);		//开始检测传感器
+			bright_thread->user_data = 0;
+			weakup_thread_to_get_sensor();
+		}
+		rt_kprintf("\nsensor switch to:%d\n\n", !bright_thread->user_data);
+		
+//		char * msg = "Key11 has been pushed. external interupt triggered.";
+//		rt_mq_send(msg_mq, msg, sizeof(msg));
 		
 		EXTI_ClearFlag(EXTI_Line11);
 	}
 }
-
+#if 0
 void EXTI1_IRQHandler(void)
 {
 	MSG_TYPE msg = MSG_KEY1_PRESS;
@@ -86,56 +98,5 @@ void EXTI1_IRQHandler(void)
 	rt_mq_send(msg_mq, &msg, sizeof(msg));
 	
 	EXTI_ClearFlag(EXTI_Line1);
-}
-
-#if 0
-void EXTI2_IRQHandler (void)
-{
-	if(EXTI_GetITStatus(EXTI_Line2) == SET )
-	{
-		//用户代码
-		
-		rt_mq_send(key_mq,														// 写入（发送）队列的ID(句柄) 
-							"Key2(PE.2) EXIT Occur \n", 				// 写入（发送）的数据
-							sizeof("Key2(PE.2) EXIT Occur \n")	// 数据的长度 
-							);
-		
-		//--------------------------------
-		EXTI_ClearFlag(EXTI_Line2);
-	}
-}
-#endif
-
-#if 0
-void EXTI3_IRQHandler (void)
-{
-	if(EXTI_GetITStatus(EXTI_Line3) == SET )
-	{
-		//用户代码
-		
-	rt_mq_send(key_mq, 												// 写入（发送）队列的ID(句柄) 
-		         "Key1(PE.3) is Pressed\n",					// 写入（发送）的数据 
-          		sizeof("Key1(PE.3) is Pressed\n")	// 数据的长度 
-						);
-		
-		//--------------------------------
-		EXTI_ClearFlag(EXTI_Line3);
-	}
-}
-#endif
-
-
-#if 0
-void EXTI9_5_IRQHandler(void)
-{
-		if(EXTI_GetITStatus(EXTI_Line5) == SET )
-	{
-		//用户代码
-		printf("PC5 Press!\n");
-		
-		//--------------------------------
-		
-		EXTI_ClearFlag(EXTI_Line5);
-	}
 }
 #endif

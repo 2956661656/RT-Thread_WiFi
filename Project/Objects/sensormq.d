@@ -48,6 +48,7 @@
 .\objects\sensormq.o: ..\Source\Dev\Gpio.h
 .\objects\sensormq.o: ..\Source\Dev\USart.h
 .\objects\sensormq.o: ..\Source\Dev\ChipInfo.h
+.\objects\sensormq.o: ..\Source\Dev\Exti.h
 .\objects\sensormq.o: ..\Source\Dev\ADCTimer.h
 .\objects\sensormq.o: ..\Source\Dev\Sensor.h
 .\objects\sensormq.o: ..\Source\Main\Lock.h

@@ -1,6 +1,12 @@
 #include "config.h"
 #include "Task.h"
 
+//ALIGN(RT_ALIGN_SIZE)
+//static char bright_thread_stack[1024];
+//static struct rt_thread bright_thread_s;
+//ALIGN(RT_ALIGN_SIZE)
+//static char temper_thread_stack[1024];
+//static struct rt_thread temper_thread_s;
 
 rt_thread_t bright_thread;
 rt_thread_t temper_thread;
@@ -59,6 +65,21 @@ void TaskInit(void)
 		
 		++TaskIndex;
 	}
+//	rt_err_t result = RT_EOK;
+//	
+//	result = rt_thread_init(&bright_thread_s,
+//							"bright_thread",
+//							bright_checkout_thread_entry, RT_NULL,
+//							bright_thread_stack, sizeof(bright_thread_stack),
+//							2, 10);
+//	if(result == RT_EOK) rt_thread_startup(&bright_thread_s);
+//	result = rt_thread_init(&temper_thread_s,
+//							"temper_thread",
+//							temper_checkout_thread_entry, RT_NULL,
+//							temper_thread_stack, sizeof(temper_thread_stack),
+//							3, 10);
+//	if(result == RT_EOK) rt_thread_startup(&temper_thread_s);
+
 	
 }
 INIT_APP_EXPORT(TaskInit);
@@ -76,8 +97,9 @@ void led_thread_entry(void *parameter)
 
 void usart2_recv_thread_entry(void *parameter)
 {
+	rt_err_t result;
 	while(1){
-		rt_err_t result = rt_sem_take(usart2_recv_sem, RT_WAITING_FOREVER);
+		result = rt_sem_take(usart2_recv_sem, RT_WAITING_FOREVER);
 		if(result == RT_EOK){
 			//串口接收到数据
 			rt_kprintf("\nUsart2 has recevied data: %s.\n", g_USART1_RxBuf);
@@ -109,49 +131,63 @@ void usart2_recv_thread_entry(void *parameter)
 
 void bright_checkout_thread_entry(void *params)		//优先级高
 {
+	bright_thread = rt_thread_self();
 	uint16_t temper = 0;
 	uint16_t brightness = 0;
 
-	while(1){
-		//互斥 读取buffer[0]
-		rt_mutex_take(buffer_lock, RT_WAITING_FOREVER);
-		brightness = ADCBuffer[0];
-		rt_mutex_release(buffer_lock);
-		//等待另一个函数的消息
-		rt_mq_recv(sensor_mq, &temper, sizeof(temper), RT_WAITING_FOREVER);
-		if(temper == 0){		//失败
-			rt_kprintf("获取temperature失败\n");
-		}else{
-			//成功，连接结果
-			rt_kprintf("\nbrightness: %d, temperature: %d\n", brightness, temper);
+	while(1){		//该数据由外部中断-》开关1[PA11]控制
+		if(bright_thread->user_data == 0){
+			//互斥 读取buffer[0]
+			rt_mutex_take(buffer_lock, RT_WAITING_FOREVER);
+			brightness = ADCBuffer[0];
+			rt_mutex_release(buffer_lock);
+			//等待另一个函数的消息
+			rt_mq_recv(sensor_mq, &temper, sizeof(temper), RT_WAITING_FOREVER);
+			if(temper == 0){		//失败
+				rt_kprintf("获取temperature失败\n\n");
+			}else{
+				//成功，连接结果
+				rt_kprintf("\nbrightness: %d, temperature: %d\n\n", brightness, temper);
+			}
+			
+			
+	//		rt_kprintf("bright test\n");
+//			bright_thread = rt_thread_self();
+			rt_thread_mdelay(0xFFFFFF);
+	//		rt_thread_suspend(bright_thread);
+	//		rt_schedule();
 		}
-		
-		
-//		rt_kprintf("bright test\n");
-		bright_thread = rt_thread_self();
-		rt_thread_mdelay(0xFFFFFF);
-//		rt_thread_suspend(bright_thread);
-//		rt_schedule();
+		else{
+			rt_kprintf("\nbright_thread on stopping...\n\n");
+			rt_thread_mdelay(0xFFFFFF);
+		}
 	}
 }
 
 void temper_checkout_thread_entry(void *params)		//优先级低
 {
+	temper_thread = rt_thread_self();
 	uint16_t temper = 0;
 	while(1){
-		//互斥 读取buffer[1]
-		rt_mutex_take(buffer_lock, RT_WAITING_FOREVER);
-		temper = ADCBuffer[1];
-		rt_mutex_release(buffer_lock);
-		//发送消息
-		rt_mq_send(sensor_mq, &temper, sizeof(temper));
-		
-//		rt_kprintf("temper test\n");
-		
-		temper_thread = rt_thread_self();
-		rt_thread_mdelay(0xFFFFFF);
-//		rt_thread_suspend(temper_thread);
-//		rt_schedule();		
-	}//todo 应使两个线程睡眠
+		if(bright_thread->user_data == 0){
+			//互斥 读取buffer[1]
+			rt_mutex_take(buffer_lock, RT_WAITING_FOREVER);
+			temper = ADCBuffer[1];
+			rt_mutex_release(buffer_lock);
+			//发送消息
+			rt_mq_send(sensor_mq, &temper, sizeof(temper));
+			
+	//		rt_kprintf("temper test\n");
+			
+//			temper_thread = rt_thread_self();
+			rt_thread_mdelay(0xFFFFFF);
+	//		rt_thread_suspend(temper_thread);
+	//		rt_schedule();		
+		}
+		else{
+			rt_kprintf("\ntemper_thread stopping...\n\n");
+			rt_thread_mdelay(0xFFFFFF);
+		}
+	}
 }
 

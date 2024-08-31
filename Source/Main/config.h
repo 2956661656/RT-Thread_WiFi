@@ -61,7 +61,7 @@ typedef enum{
 #include "Gpio.h"
 #include "USart.h"
 #include "ChipInfo.h"
-//#include "Exti.h"
+#include "Exti.h"
 #include "ADCTimer.h"
 //#include "Button.h"
 #include "Sensor.h"
@@ -77,6 +77,9 @@ EXT rt_sem_t 		usart2_recv_sem;		//串口2控制信号量控制块指针
 
 //----------------------------------------
 #endif
+
+//通用函数声明
+void weakup_thread_to_get_sensor(void);
 
 /********************************************************************************************************
 **                            End Of File

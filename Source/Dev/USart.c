@@ -71,7 +71,7 @@ void UsartInit(void)
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
 	
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
 	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_3 ;  //RX
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
@@ -91,8 +91,8 @@ void UsartInit(void)
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
-	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
-	USART_ITConfig(USART2, USART_IT_IDLE, ENABLE);
+	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);		//使能接收缓存区非空中断
+	USART_ITConfig(USART2, USART_IT_IDLE, ENABLE);		//使能空闲中断
 
 	USART_Cmd(USART2, ENABLE);//使能串口2
 	
@@ -198,7 +198,6 @@ void USART1_IRQHandler(void)
 
 
 
-
 //USART2_IRQHandler,串口2中断回调函数
 void USART2_IRQHandler(void)
 {
@@ -220,7 +219,7 @@ void USART2_IRQHandler(void)
 	{
 			USART_ClearFlag(USART2, USART_FLAG_ORE);
 	}
-	if( USART_GetFlagStatus(USART2,USART_FLAG_IDLE)==SET ) 				// 
+	if( USART_GetFlagStatus(USART2,USART_FLAG_IDLE)==SET ) 				// 串口空闲中断
 	{
 		#if USART2_EN == 1 
 		 

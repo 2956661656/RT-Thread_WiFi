@@ -48,6 +48,7 @@
 .\objects\main.o: ..\Source\Dev\Gpio.h
 .\objects\main.o: ..\Source\Dev\USart.h
 .\objects\main.o: ..\Source\Dev\ChipInfo.h
+.\objects\main.o: ..\Source\Dev\Exti.h
 .\objects\main.o: ..\Source\Dev\ADCTimer.h
 .\objects\main.o: ..\Source\Dev\Sensor.h
 .\objects\main.o: ..\Source\Main\Lock.h
